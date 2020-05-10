@@ -30,7 +30,7 @@ export default class Add extends Component {
 			            {/* SELECT2 EXAMPLE */}
 			            <div className="card card-default">
 			                <div className="card-header">
-			                    <h3 className="card-title"></h3>
+			                    <h3 className="card-title">Add Todo</h3>
 			                    <div className="card-tools">
 			                        <button type="button" className="btn btn-tool" data-card-widget="collapse">
 			                            <i className="fas fa-minus" />

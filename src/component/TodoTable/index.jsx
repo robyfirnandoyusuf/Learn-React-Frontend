@@ -1,5 +1,7 @@
-import React  from 'react';
+import React,{Fragment}  from 'react';
 import {Link} from 'react-router-dom'
+// import $ from 'jquery'; 
+import DataTable, { createTheme,defaultThemes } from 'react-data-table-component';
 
 export default class index extends React.Component {
 
@@ -13,6 +15,7 @@ export default class index extends React.Component {
     }
 
     componentDidMount() {
+    	// const content = window.content;
         const apiUrl = 'http://localheart:8000/todo/list';
 
         fetch(apiUrl)
@@ -28,18 +31,69 @@ export default class index extends React.Component {
                 this.setState({ error });
             }
         )
+        // if ($.fn.DataTable.isDataTable( '#example2' )) 
+        // {
+	        const script = document.createElement("script");
 
-        const script = document.createElement("script");
+	        script.src = 'js/content.js';
+	        // script.async = true;
 
-        script.src = 'js/content.js';
-        script.async = true;
+	        document.body.appendChild(script);
 
-        document.body.appendChild(script);
+	        
+
+        // }
     }
 
     render() {
         const { error, todos} = this.state;
 
+        const columns = [
+        {
+        	name: 'Title',
+        	selector: 'title',
+        	sortable: true,
+        },
+        {
+        	name: 'Description',
+        	selector: 'description',
+        	sortable: true,
+        	right: true,
+        },
+        ];
+
+  const customStyles = {
+  header: {
+    style: {
+      minHeight: '56px',
+    },
+  },
+  headRow: {
+    style: {
+      borderTopStyle: 'solid',
+      borderTopWidth: '1px',
+      borderTopColor: defaultThemes.default.divider.default,
+    },
+  },
+  headCells: {
+    style: {
+      '&:not(:last-of-type)': {
+        borderRightStyle: 'solid',
+        borderRightWidth: '1px',
+        borderRightColor: defaultThemes.default.divider.default,
+      },
+    },
+  },
+  cells: {
+    style: {
+      '&:not(:last-of-type)': {
+        borderRightStyle: 'solid',
+        borderRightWidth: '1px',
+        borderRightColor: defaultThemes.default.divider.default,
+      },
+    },
+  },
+};
         if(error) 
         {
             return (
@@ -49,57 +103,39 @@ export default class index extends React.Component {
         else 
         {
             return (
-	            <div>
-		            {/* Main content */}
-		            <section className="content">
-		                <div className="row">
-		                  	<div className="col-12">
-			                    <div className="card">
-			                      	<div className="card-header">
-			                        	<h3 className="card-title">
-			                        		<Link to="/add" className="btn btn-primary btn-block">Add Todo</Link>
-			                        	</h3>
-			                      	</div>
-			                      	{/* /.card-header */}
-			                      	<div className="card-body">
-			                        <table id="example2" className="table table-bordered table-hover">
-			                          	<thead>
-				                            <tr>
-				                              	<th>No</th>
-				                              	<th>Title</th>
-				                              	<th>Description</th>
-				                            </tr>
-			                          	</thead>
-			                          	<tbody>
-			                              	{todos.map(( listValue, index ) => {
-			                              	return (
-				                                <tr key={index}>
-				                                <td>{index+1}</td>
-				                                <td>{listValue.title}</td>
-				                                <td>{listValue.description}</td>
-				                                </tr>
-			                                  );
-			                              	})}
-			                          	</tbody>
-			                          	<tfoot>
-			                            <tr>
-			                              	<th>No</th>
-			                              	<th>Title</th>
-			                              	<th>Description</th>
-			                            </tr>
-			                          	</tfoot>
-			                        </table>
-			                      </div>
-			                      {/* /.card-body */}
-			                    </div>
-		                    	{/* /.card */}
-		                  	</div>
-		                  	{/* /.col */}
-		                </div>
-		                {/* /.row */}
-		            </section>
-		            {/* /.content */}
-	            </div>
+            	<Fragment>
+		            <div>
+			            {/* Main content */}
+			            <section className="content">
+			                <div className="row">
+			                  	<div className="col-12">
+				                    <div className="card">
+				                      	<div className="card-header">
+				                        	<h3 className="card-title">
+				                        		<Link to="/add" className="btn btn-primary btn-block">Add Todo</Link>
+				                        	</h3>
+				                      	</div>
+				                      	{/* /.card-header */}
+				                      	<div className="card-body">
+				                      	<DataTable
+				                      	title="Todo List"
+				                      	columns={columns}
+				                      	data={todos}
+				                      	customStyles={customStyles}
+				                      	pagination
+				                      	/>
+				                      </div>
+				                      {/* /.card-body */}
+				                    </div>
+			                    	{/* /.card */}
+			                  	</div>
+			                  	{/* /.col */}
+			                </div>
+			                {/* /.row */}
+			            </section>
+			            {/* /.content */}
+		            </div>
+            	</Fragment>
         	);
         }
     }
