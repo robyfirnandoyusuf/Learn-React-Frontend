@@ -1,4 +1,5 @@
-import React from 'react';
+import React  from 'react';
+import {Link} from 'react-router-dom'
 
 export default class index extends React.Component {
 
@@ -56,7 +57,7 @@ export default class index extends React.Component {
 			                    <div className="card">
 			                      	<div className="card-header">
 			                        	<h3 className="card-title">
-			                        		<button className="btn btn-primary btn-block">Add Todo</button>
+			                        		<Link to="/add" className="btn btn-primary btn-block">Add Todo</Link>
 			                        	</h3>
 			                      	</div>
 			                      	{/* /.card-header */}

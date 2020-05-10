@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Header from './container/template/Header'
 import Menu from './container/template/Menu'
 import Footer from './container/template/Footer'
-import Content from './container/datatable/Content'
-
+import Listing from './container/todo/Listing'
+import Add from './container/todo/Add'
+import {BrowserRouter,Route} from 'react-router-dom'
 
 export default class App extends Component {
 
@@ -21,12 +22,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header/>
-        <Menu/>
-        <Content/>
-        <Footer/>
-      </div>
+        <BrowserRouter>
+            <div>
+                <Header/>
+                {/*<Listing/>*/}
+                <Menu/>
+                <Footer/> 
+
+                <Route exact path="/" component={Listing} />
+                <Route path="/add" component={Add} />
+            </div>
+        </BrowserRouter>
     );
   }
 }
